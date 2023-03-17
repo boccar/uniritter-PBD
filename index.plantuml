@@ -1,0 +1,51 @@
+@startuml DIAGRAMA ENTIDADE RELACIONAMENTO
+
+entity clientes{
+  id : inteiro <<PK>> 
+  nome : caracter 
+  sobrenome : caracter 
+  cpf : inteiro 
+  data_nascimento : data 
+  telefone : inteiro 
+  endereco : texto 
+}
+
+entity produtos{
+  id : inteiro <<PK>> 
+  nome : caracter 
+  descricao : texto 
+  preco : real 
+  id_categoria : inteiro <<FK>> 
+}
+
+entity categorias{
+  id : inteiro <<PK>>
+  descricao : texto 
+  setor : caracter 
+}
+
+entity compras{
+  id : inteiro <<PK>>
+  subtotal  : real
+  id_cliente : inteiro <<FK>> 
+  id_produto : inteiro <<FK>> 
+}
+
+produtos -- categorias 
+produtos -- compras 
+clientes -- compras 
+
+/' comentarios tags do plantuml utilizar contrabarra e aspas simples '/
+
+@enduml
+
+/' 
+Tabela  = Entidade
+Colunas = Atributos
+Linhas  = instancias = Dados
+
+Chaves = 
+Chave_primaria     =  PK
+Chave_estrangeira  = FK
+
+'/
