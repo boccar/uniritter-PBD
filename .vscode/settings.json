@@ -9,6 +9,16 @@
             "name": "PostgreSQL 15",
             "username": "postgres",
             "database": "postgres"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "DB Aluno",
+            "database": "DB Aluno",
+            "username": "postgres"
         }
     ]
 }
