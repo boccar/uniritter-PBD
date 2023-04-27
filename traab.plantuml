@@ -1,0 +1,158 @@
+@startuml
+class clientes_pfs{
+ id <<pk>>
+ nome
+ cpf
+ --
+ FOREIGN KEY (id) REFERENCES clientes (id)
+ 
+}
+
+class clientes_pjs{
+ id <<pk>>
+ razao_social
+ cnpj
+ --
+ FOREIGN KEY (id) REFERENCES clientes (id)
+}
+
+class clientes{
+ id <<pk>>
+ endereco
+ telefone
+ uf
+ --
+ PRIMARY KEY (id)
+}
+
+class funcionarios{
+ id <<pk>>
+ nome
+ cpf
+ salario
+ --
+ PRIMARY KEY (id)
+ 
+}
+
+class locais_hospedagem{
+ id <<pk>>
+ nome
+ tipo
+ --
+ PRIMARY KEY (id)
+ 
+}
+
+class hospedagens{
+ id <<pk>>
+ data_entrada
+ data_saida
+ status
+ id_cliente <<fk>>
+ id_quarto <<fk>>
+ id_locais_hospedagem
+ --
+ PRIMARY KEY (id),
+ FOREIGN KEY (id_cliente) REFERENCES clientes (id),
+ FOREIGN KEY (id_quarto) REFERENCES quartos (id),
+ FOREIGN KEY (id_locais_hospedagem) REFERENCES locais_hospedagem (id)
+}
+
+class vendas{
+ id <<pk>>
+ id_produtos
+ id_hospedagem
+ id_funcionario
+ quantidade
+ data_venda
+ --
+ PRIMARY KEY (id),
+ FOREIGN KEY (id_produtos) REFERENCES produtos (id),
+ FOREIGN KEY (id_hospedagem) REFERENCES hospedagens (id),
+ FOREIGN KEY (id_funcionario) REFERENCES funcionarios (id)
+}
+
+
+class atendimentos{
+ id <<pk>>
+ data_servico
+ id_servico <<fk>>
+ id_hospedagem <<fk>>
+ --
+ PRIMARY KEY (id),
+ FOREIGN KEY (id_servico) REFERENCES servicos (id),
+ FOREIGN KEY (id_hospedagem) REFERENCES hospedagens (id),
+ FOREIGN KEY (id_funcionario) REFERENCES funcionarios (id)
+}
+
+class servicos{
+ id <<pk>>
+ descricao
+ valor
+ --
+ PRIMARY KEY (id)
+}
+
+class produtos{
+ id <<pk>>
+ produtos
+ descricao
+ valor
+ --
+ PRIMARY KEY (id)
+}
+
+class reservas {
+ id <<pk>>
+ data_reserva
+ diarias
+ data_entrada
+ data_saida
+ status
+ id_cliente <<fk>>
+ id_quarto <<fk>>
+ id_responsavel
+ --
+ PRIMARY KEY (id),
+ FOREIGN KEY (id_cliente) REFERENCES clientes(id),
+ FOREIGN KEY (id_quarto) REFERENCES quartos(id)
+ FOREIGN KEY (id_responsavel) REFERENCES clientes(id)
+}
+
+class tipos_quartos{
+ id <<pk>>
+ descricao
+ valor
+ capacidade
+ --
+ PRIMARY KEY (id)
+}
+
+class quartos{
+ id <<pk>>
+ andar
+ status
+ numero
+ id_tipo_quartos <<fk>>
+ --
+ PRIMARY KEY (id),
+ FOREIGN KEY (id_tipo) REFERENCES tipos_quartos (id)
+}
+
+clientes_pfs }o-- clientes
+clientes_pjs }o-- clientes
+hospedagens ||-- clientes
+hospedagens ||-- quartos
+hospedagens ||-- locais_hospedagem
+vendas ||-- produtos
+vendas ||-- hospedagens
+vendas ||-- funcionarios
+atendimentos ||-- servicos
+atendimentos ||-- hospedagens
+reservas ||-- clientes
+reservas ||-- quartos
+reservas }o-- clientes
+quartos ||-- tipos_quartos
+funcionarios ||--o{ atendimentos
+@enduml
