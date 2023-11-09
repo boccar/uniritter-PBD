@@ -1,0 +1,79 @@
+@startuml Diagrama Entidade Relacionamento - Hospedagens
+
+entity clientes{
+id 
+endereco 
+telefone
+uf	
+}
+
+entity clientes_pjs{
+id   
+razao_social   
+cnpj          
+}
+
+entity clientes_pfs{
+id   
+nome           
+cpf            
+}
+
+entity tipos_quartos{
+id         
+descricao 
+valor    
+capacidade 
+}
+
+entity quartos{
+id      
+andar   
+status  
+numero
+id_tipo_quarto
+}
+
+entity servicos{
+id        
+descricao 
+valor    
+}
+
+entity reservas{
+id     
+data_reserva 
+diarias      
+data_entrada  
+data_saida    
+status  
+id_cliente    
+id_quarto  
+}
+
+entity hospedagens{
+id 
+data_entrada 
+data_saida   
+status   
+id_reserva 	  
+}
+
+entity atendimentos{
+id    
+data_servico 
+id_servico      
+id_hospedagem   
+}
+
+clientes ||--|| clientes_pjs
+clientes ||--|| clientes_pfs
+clientes ||--|{ reservas
+reservas }|--|| quartos
+reservas }|--|{ hospedagens
+quartos  ||--|{ tipos_quartos
+hospedagens  ||--|{ atendimentos
+atendimentos ||--|{ servicos
+clientes_pfs ||--|{ hospedagens
+
+@enduml
